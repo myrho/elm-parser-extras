@@ -2,7 +2,9 @@
 
 This library provide useful combinators for working with the [`elm/parser`](https://package.elm-lang.org/packages/elm/parser/1.0.0/) library such as parsing expression between parentheses, braces, brackets or any other symbols.
 
-[![Build Status](https://travis-ci.org/Punie/elm-parser-extras.svg?branch=master)](https://travis-ci.org/Punie/elm-parser-extras)
+**This is a fork of Punie/elm-parser-extras.** Please see the [changelog](https://github.com/myrho/elm-parser-extras/blob/master/CHANGELOG.md) for API changes.
+
+The rest of this readme stems from the original author.
 
 ## Why?
 

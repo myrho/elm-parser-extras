@@ -1,7 +1,7 @@
 {
     "type": "package",
     "name": "myrho/elm-parser-extras",
-    "summary": "Convenience functions for building parsers with elm/parser. Fork of Punie/elm-parser-extras.",
+    "summary": "Extra functions for building parsers. Fork of Punie/elm-parser-extras.",
     "license": "BSD-3-Clause",
     "version": "1.0.0",
     "exposed-modules": [

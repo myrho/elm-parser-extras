@@ -10,6 +10,11 @@ module Parser.Extras exposing
 
 @docs many, some, between, parens, braces, brackets
 
+
+# Parsers
+
+@docs quotedString
+
 -}
 
 import Parser exposing (..)

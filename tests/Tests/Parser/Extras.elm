@@ -36,6 +36,7 @@ suite =
     describe "Parser.Extras"
         [ many
         , some
+        , quotedString
         ]
 
 
@@ -88,4 +89,34 @@ some =
             \_ ->
                 Parser.run (Parser.Extras.some complexTerm) "(42, 1337) (5, 25)"
                     |> Expect.equal (Ok ( Point 42 1337, [ Point 5 25 ] ))
+        ]
+
+
+quotedString : Test
+quotedString =
+    describe "Parser.Extras.quotedString"
+        [ test "parse string with escaped characters" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"str\\\"\""
+                    |> Expect.equal (Ok "str\"")
+        , test "parse string with escaped character in beginning" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"\\\"str\""
+                    |> Expect.equal (Ok "\"str")
+        , test "parse string with escaped character in middle" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"xyz\\\"str\""
+                    |> Expect.equal (Ok "xyz\"str")
+        , test "parse string with double escaped characters" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"str\\\"\\\"\""
+                    |> Expect.equal (Ok "str\"\"")
+        , test "parse string with other escaped characters" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"str\\x\""
+                    |> Expect.equal (Ok "str\\x")
+        , test "parse string with equal quote and escape char" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\'' '\'') "'str'''"
+                    |> Expect.equal (Ok "str'")
         ]

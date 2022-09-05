@@ -1,4 +1,7 @@
-module Parser.Extras exposing (many, some, between, parens, braces, brackets)
+module Parser.Extras exposing
+    ( many, some, between, parens, braces, brackets
+    , quotedString
+    )
 
 {-| Some convenience parser combinators.
 
@@ -73,6 +76,18 @@ brackets =
     between (symbol "[") (symbol "]")
 
 
+{-| Parse a quoted string with an escape character.
+
+    quotedString '\\' '\'' "'a 'quoted' string'" -- Ok "a 'quoted' string"
+
+-}
+quotedString : Char -> Char -> Parser String
+quotedString escape quote =
+    succeed identity
+        |. chompIf ((==) quote)
+        |= loop "" (quotedStringHelp escape quote)
+
+
 
 -- HELPERS
 
@@ -85,4 +100,20 @@ manyHelp p vs =
             |. spaces
         , succeed ()
             |> map (\_ -> Done (List.reverse vs))
+        ]
+
+
+quotedStringHelp : Char -> Char -> String -> Parser (Step String String)
+quotedStringHelp escape quote string =
+    oneOf
+        [ token (String.fromList [ escape, quote ])
+            |> map (\_ -> string ++ String.fromChar quote |> Loop)
+        , chompIf ((==) quote)
+            |> map (\_ -> Done string)
+        , chompIf ((==) escape)
+            |> map (\_ -> string ++ String.fromChar escape |> Loop)
+        , succeed ()
+            |. chompWhile (\c -> c /= quote && c /= escape)
+            |> getChompedString
+            |> map (\s -> string ++ s |> Loop)
         ]

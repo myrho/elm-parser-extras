@@ -83,7 +83,9 @@ brackets =
 
 {-| Parse a quoted string with an escape character.
 
-    quotedString '\\' '\'' "'a 'quoted' string'" -- Ok "a 'quoted' string"
+    quotedString '/' '\'' "'a /'quoted/' string'" --> "a 'quoted' string"
+
+    Usually the escape char is the backslash. Due to elm-format removing backslashes before quotes this example uses the normal slash.
 
 -}
 quotedString : Char -> Char -> Parser String

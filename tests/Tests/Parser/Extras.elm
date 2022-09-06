@@ -111,6 +111,10 @@ quotedString =
             \_ ->
                 Parser.run (Parser.Extras.quotedString '\\' '"') "\"str\\\"\\\"\""
                     |> Expect.equal (Ok "str\"\"")
+        , test "parse string with escaped escape char" <|
+            \_ ->
+                Parser.run (Parser.Extras.quotedString '\\' '"') "\"\\\\\""
+                    |> Expect.equal (Ok "\\")
         , test "parse string with other escaped characters" <|
             \_ ->
                 Parser.run (Parser.Extras.quotedString '\\' '"') "\"str\\x\""

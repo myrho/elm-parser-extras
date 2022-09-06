@@ -113,6 +113,8 @@ quotedStringHelp escape quote string =
     oneOf
         [ token (String.fromList [ escape, quote ])
             |> map (\_ -> string ++ String.fromChar quote |> Loop)
+        , token (String.fromList [ escape, escape ])
+            |> map (\_ -> string ++ String.fromChar escape |> Loop)
         , chompIf ((==) quote)
             |> map (\_ -> Done string)
         , chompIf ((==) escape)

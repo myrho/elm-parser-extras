@@ -3,7 +3,7 @@
     "name": "myrho/elm-parser-extras",
     "summary": "Extra functions for building parsers. Fork of Punie/elm-parser-extras.",
     "license": "BSD-3-Clause",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "exposed-modules": [
         "Parser.Extras",
         "Parser.Expression"
